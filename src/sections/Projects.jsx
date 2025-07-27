@@ -1,12 +1,8 @@
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
-import { Suspense, useState } from 'react';
-import { Canvas } from '@react-three/fiber';
-import { Center, OrbitControls } from '@react-three/drei';
+import { useState } from 'react';
 
 import { myProjects } from '../constants/index.js';
-import CanvasLoader from '../components/Loading.jsx';
-import DemoComputer from '../components/DemoComputer.jsx';
 
 const projectCount = myProjects.length;
 
@@ -80,19 +76,35 @@ const Projects = () => {
           </div>
         </div>
 
-        <div className="border border-black-300 bg-black-200 rounded-lg h-96 md:h-full">
-          <Canvas>
-            <ambientLight intensity={Math.PI} />
-            <directionalLight position={[10, 10, 5]} />
-            <Center>
-              <Suspense fallback={<CanvasLoader />}>
-                <group scale={2} position={[0, -3, 0]} rotation={[0, -0.1, 0]}>
-                  <DemoComputer texture={currentProject.texture} />
-                </group>
-              </Suspense>
-            </Center>
-            <OrbitControls maxPolarAngle={Math.PI / 2} enableZoom={false} />
-          </Canvas>
+        {/* Project Image Display */}
+        <div className="border border-black-300 bg-black-200 rounded-lg h-96 md:h-full overflow-hidden group">
+          <div className="w-full h-full relative">
+            <img 
+              src={currentProject.texture} 
+              alt={currentProject.title}
+              className="h-auto object-cover rounded-lg transition-transform duration-500 group-hover:scale-105"
+            />
+            <img 
+              src={currentProject.texture2} 
+              alt={currentProject.title}
+              className="h-auto object-cover rounded-lg transition-transform duration-500 group-hover:scale-105"
+            />
+            
+            {/* Optional overlay with project info */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg">
+              <div className="absolute bottom-4 left-4 right-4">
+                <h3 className="text-white font-semibold text-lg mb-2">{currentProject.title}</h3>
+                <p className="text-gray-300 text-sm line-clamp-2">{currentProject.desc}</p>
+              </div>
+            </div>
+
+            {/* Project counter */}
+            <div className="absolute top-4 right-4 bg-black/60 backdrop-blur-sm rounded-full px-3 py-1">
+              <span className="text-white text-sm font-medium">
+                {selectedProjectIndex + 1} / {projectCount}
+              </span>
+            </div>
+          </div>
         </div>
       </div>
     </section>
