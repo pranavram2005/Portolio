@@ -26,7 +26,7 @@ export const navLinks = [
   },
   {
     id: 6,
-    name: 'Loyalty Automations Case Study',
+    name: 'Loyalty Automations UX Case Study',
     href: 'https://loyalty-automations-case-study.onrender.com/',
   }
 ];
