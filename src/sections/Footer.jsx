@@ -1,26 +1,34 @@
-const Footer = () => {
-  return (
-    <footer className="c-space pt-7 pb-3 border-t border-black-300 flex justify-between items-center flex-wrap gap-5">
-      <div className="text-white-500 flex gap-2">
-        <p>Terms & Conditions</p>
-        <p>|</p>
-        <p>Privacy Policy</p>
-      </div>
+import { CONTACT } from '../constants/index.js';
+
+const Footer = () => (
+  <footer className="border-t border-white/10 py-10">
+    <div className="section-shell flex flex-wrap items-center justify-between gap-6">
+      <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-white-500">
+        PRANAV RAM P S · {CONTACT.location} · 2026
+      </p>
 
       <div className="flex gap-3">
-        <a href="https://github.com/pranavram2005" target="_blank">
-        <div className="social-icon">
-          <img src="/assets/github.svg" alt="github" className="w-1/2 h-1/2" />
-        </div></a>
-        <a href="https://www.instagram.com/pranavram2005" target="_blank">
-        <div className="social-icon">
-          <img src="/assets/instagram.svg" alt="instagram" className="w-1/2 h-1/2" />
-        </div></a>
+        <a
+          href={CONTACT.github}
+          target="_blank"
+          rel="noreferrer"
+          aria-label="GitHub"
+          className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10
+                     bg-white/[0.03] transition-colors duration-300 hover:border-white/30">
+          <img src="assets/github.svg" alt="" className="h-4 w-4" />
+        </a>
+        <a
+          href={CONTACT.instagram}
+          target="_blank"
+          rel="noreferrer"
+          aria-label="Instagram"
+          className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10
+                     bg-white/[0.03] transition-colors duration-300 hover:border-white/30">
+          <img src="assets/instagram.svg" alt="" className="h-4 w-4" />
+        </a>
       </div>
-
-      <p className="text-white-500">© 2025 Pranav Ram PS. All rights reserved.</p>
-    </footer>
-  );
-};
+    </div>
+  </footer>
+);
 
 export default Footer;

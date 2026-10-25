@@ -1,13 +1,14 @@
-import { useGLTF } from '@react-three/drei';
-import { useRef } from 'react';
 import { useGSAP } from '@gsap/react';
+import { useTexture } from '@react-three/drei';
 import gsap from 'gsap';
+import { useRef } from 'react';
 
 const Target = (props) => {
   const targetRef = useRef();
-  const { scene } = useGLTF(
-    'https://vazxmixjsiawhamofees.supabase.co/storage/v1/object/public/models/target-stand/model.gltf',
-  );
+
+  // Local matcap texture - the original remote model URL is no longer reachable,
+  // so the target is built procedurally from concentric rings instead.
+  const matcap = useTexture('textures/rings.png');
 
   useGSAP(() => {
     gsap.to(targetRef.current.position, {
@@ -16,12 +17,29 @@ const Target = (props) => {
       repeat: -1,
       yoyo: true,
     });
+
+    gsap.to(targetRef.current.rotation, {
+      y: `+=${Math.PI * 2}`,
+      duration: 12,
+      repeat: -1,
+      ease: 'none',
+    });
   });
 
   return (
-    <mesh {...props} ref={targetRef} rotation={[0, Math.PI / 5, 0]} scale={1.5}>
-      <primitive object={scene} />
-    </mesh>
+    <group {...props} ref={targetRef} rotation={[0, Math.PI / 5, 0]} scale={1.5}>
+      {[1, 0.7, 0.4].map((radius, index) => (
+        <mesh key={index}>
+          <torusGeometry args={[radius, 0.08, 16, 48]} />
+          <meshMatcapMaterial matcap={matcap} toneMapped={false} />
+        </mesh>
+      ))}
+
+      <mesh>
+        <sphereGeometry args={[0.18, 24, 24]} />
+        <meshMatcapMaterial matcap={matcap} toneMapped={false} />
+      </mesh>
+    </group>
   );
 };
 

@@ -1,4 +1,6 @@
 @import url('https://fonts.cdnfonts.com/css/general-sans');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@400;500;600&family=Caveat:wght@600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -9,8 +11,31 @@
 }
 
 body {
-  background: #010103;
-  font-family: 'General Sans', sans-serif;
+  background: #f3eee3;
+  color: #20211d;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 17px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: #b08540;
+  color: #fff;
+}
+
+/* Honour users who prefer less motion - GSAP reveals are also guarded in JS */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 @layer utilities {
@@ -193,5 +218,321 @@ body {
   }
   100% {
     transform: rotate(0deg);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  33% {
+    transform: translateY(-10px) rotate(120deg);
+  }
+  66% {
+    transform: translateY(5px) rotate(240deg);
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* ============================================================
+   DESIGN SYSTEM - "the room"
+   Numbered sections, mono labels, frosted glass cards.
+   ============================================================ */
+
+@layer components {
+  /* --- layout --- */
+  .section-shell {
+    @apply relative mx-auto w-full max-w-7xl px-5 sm:px-10;
+  }
+
+  .section-pad {
+    @apply py-24 sm:py-32;
+  }
+
+  /* --- mono eyebrow: "01 / ABOUT" --- */
+  .eyebrow {
+    @apply font-mono text-xs uppercase tracking-[0.25em] text-brass;
+  }
+
+  .eyebrow-dim {
+    @apply font-mono text-[11px] uppercase tracking-[0.25em] text-white-500;
+  }
+
+  /* --- display type --- */
+  .display-xl {
+    @apply font-generalsans text-5xl font-black leading-[0.95] tracking-tight text-white sm:text-7xl lg:text-8xl;
+  }
+
+  .display-lg {
+    @apply font-generalsans text-3xl font-bold leading-tight tracking-tight text-white sm:text-4xl lg:text-5xl;
+  }
+
+  .display-md {
+    @apply font-generalsans text-xl font-bold leading-snug text-white sm:text-2xl;
+  }
+
+  /* Outlined counterpart to the solid display type */
+  .text-outline {
+    color: transparent;
+    -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.55);
+  }
+
+  .body-text {
+    @apply font-generalsans text-base leading-relaxed text-white-600 sm:text-lg;
+  }
+
+  /* --- frosted glass card --- */
+  .glass {
+    @apply relative rounded-2xl border border-white/10 bg-navy-800/70 backdrop-blur-xl;
+    box-shadow:
+      0 1px 0 0 rgba(255, 255, 255, 0.05) inset,
+      0 24px 60px -24px rgba(0, 0, 0, 0.9);
+  }
+
+  .glass-pad {
+    @apply p-6 sm:p-8;
+  }
+
+  /* Accent hairline that lights up on hover */
+  .glass-hover {
+    @apply transition-colors duration-500 hover:border-white/20;
+  }
+
+  /* --- chips & badges --- */
+  .chip {
+    @apply inline-flex items-center rounded-full border border-white/[0.12] bg-white/[0.04] px-3 py-1.5
+           font-generalsans text-sm text-white-700 transition-colors duration-300;
+  }
+
+  .chip:hover {
+    @apply border-accent-indigo/60 text-white;
+  }
+
+  .badge {
+    @apply inline-flex items-center rounded-full bg-accent-indigo px-3 py-1
+           font-mono text-[10px] font-bold uppercase tracking-[0.12em] text-white;
+  }
+
+  .badge-ghost {
+    @apply inline-flex items-center rounded-full border border-white/[0.15] px-3 py-1
+           font-mono text-[10px] uppercase tracking-[0.12em] text-white-600;
+  }
+
+  /* --- em-dash bullet list --- */
+  .dash-list {
+    @apply flex flex-col gap-3;
+  }
+
+  .dash-item {
+    @apply relative grid grid-cols-[auto_1fr] gap-3 font-generalsans text-[15px] leading-relaxed text-white-600;
+  }
+
+  .dash-item::before {
+    content: '—';
+    @apply text-accent-indigo;
+  }
+
+  /* --- metric footer on project cards --- */
+  .metric-rule {
+    @apply mt-6 border-t border-dashed border-white/[0.15] pt-4;
+  }
+
+  .metric-value {
+    @apply font-generalsans text-2xl font-black text-accent-cyan;
+  }
+
+  .metric-label {
+    @apply font-mono text-[11px] uppercase tracking-[0.18em] text-white-500;
+  }
+
+  /* --- pill buttons --- */
+  .pill {
+    @apply inline-flex items-center gap-2 rounded-full px-6 py-3 font-generalsans text-base font-semibold
+           transition-all duration-300 active:scale-95;
+  }
+
+  .pill-solid {
+    @apply pill bg-brass text-white hover:bg-brass/85;
+    box-shadow: 0 10px 40px -10px rgba(176, 133, 64, 0.8);
+  }
+
+  .pill-ghost {
+    @apply pill border border-white/20 text-white hover:border-white/[0.45] hover:bg-white/5;
+  }
+
+  /* --- nav --- */
+  .nav-pill {
+    @apply rounded-full border border-white/10 bg-navy-800/60 px-5 py-2 backdrop-blur-xl;
+  }
+}
+
+@layer utilities {
+  /* Perspective dot-grid floor, as in the reference "room" */
+  .grid-floor {
+    background-image: radial-gradient(rgba(91, 91, 246, 0.55) 1px, transparent 1px);
+    background-size: 42px 42px;
+    mask-image: linear-gradient(to top, #000 0%, transparent 72%);
+    -webkit-mask-image: linear-gradient(to top, #000 0%, transparent 72%);
+    transform: perspective(420px) rotateX(62deg);
+    transform-origin: bottom center;
+  }
+
+  /* Soft radial glow used behind section anchors */
+  .glow-blob {
+    background: radial-gradient(circle at center, rgba(176, 133, 64, 0.28) 0%, transparent 68%);
+    filter: blur(40px);
+  }
+
+  /* Giant ghosted section numeral */
+  .ghost-numeral {
+    @apply pointer-events-none select-none font-generalsans font-black leading-none text-white/[0.035];
+    font-size: clamp(7rem, 22vw, 20rem);
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+/* Reveal-on-scroll start state. GSAP clears these; if JS fails the
+   content must still be readable, so the fallback is visible. */
+.reveal-init {
+  opacity: 0;
+  transform: translateY(26px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-init {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ============================================================
+   PARCHMENT DESIGN SYSTEM
+   Ported from portfolio1: ink/parchment/brass, serif display
+   type, playful accents. The hero and other ink bands paint
+   their own dark background over the parchment page.
+   ============================================================ */
+
+@layer components {
+  /* --- layout --- */
+  .wrap {
+    @apply mx-auto w-full max-w-[1140px] px-7;
+  }
+
+  .p-section {
+    @apply relative py-20 sm:py-[120px];
+  }
+
+  /* --- type --- */
+  .p-eyebrow {
+    @apply mb-6 inline-flex items-center gap-3 font-mono text-xs uppercase tracking-[0.26em] text-brass-lo;
+  }
+
+  .p-eyebrow::before {
+    content: '';
+    @apply h-px w-[30px] bg-brass;
+  }
+
+  .p-title {
+    @apply font-serif text-[clamp(2.2rem,5.2vw,3.6rem)] font-medium leading-[1.05] -tracking-[0.01em];
+  }
+
+  .p-lead {
+    @apply font-serif text-[clamp(1.35rem,2.4vw,1.85rem)] leading-[1.45] text-[#33342d];
+  }
+
+  .scribble {
+    @apply font-hand font-bold text-accent-coral;
+  }
+
+  /* --- ink bands --- */
+  .band-ink {
+    @apply bg-ink text-tx-ink;
+  }
+
+  .band-ink-2 {
+    @apply bg-ink-2 text-tx-ink;
+  }
+
+  /* --- page hero (phero) --- */
+  .phero {
+    @apply relative overflow-hidden bg-ink px-0 pb-[90px] pt-[170px] text-tx-ink;
+  }
+
+  .phero h1 {
+    @apply font-serif text-[clamp(2.6rem,8vw,5rem)] font-medium leading-none -tracking-[0.01em] text-tx-ink;
+  }
+
+  .phero-sub {
+    @apply mt-[22px] max-w-[52ch] font-serif text-[clamp(1.05rem,2vw,1.3rem)] italic text-[#c8cfd4];
+  }
+
+  /* --- parchment card --- */
+  .p-card {
+    @apply relative overflow-hidden rounded-[20px] border border-ink/[0.14] bg-parch-panel p-8;
+  }
+
+  .p-card-hover {
+    @apply transition-[transform,box-shadow,border-color] duration-500 hover:-translate-y-2 hover:border-brass;
+  }
+
+  /* --- blobs: soft cartoon atmosphere --- */
+  .blob {
+    @apply pointer-events-none absolute z-0 animate-float rounded-full opacity-50 blur-[6px];
+  }
+
+  /* --- nav --- */
+  .p-navlink {
+    @apply relative py-1 font-mono text-[12.5px] uppercase tracking-[0.12em] transition-colors duration-200;
+  }
+
+  .p-navlink::after {
+    content: '';
+    @apply absolute -bottom-0.5 left-0 h-0.5 w-0 bg-brass transition-[width] duration-300;
+  }
+
+  .p-navlink:hover::after,
+  .p-navlink.is-active::after {
+    @apply w-full;
+  }
+
+  .p-navlink.is-active {
+    @apply text-brass;
+  }
+
+  .p-navcta {
+    @apply rounded-[40px] border-[1.5px] border-current px-[18px] py-2 font-mono text-[12.5px] uppercase
+           tracking-[0.12em] transition-colors duration-200 hover:border-brass hover:bg-brass hover:text-white;
+  }
+
+  /* --- timeline --- */
+  .tl {
+    @apply ml-2 flex flex-col gap-[34px] border-l-2 border-ink/[0.14] pl-[30px];
+  }
+
+  .tl-item {
+    @apply relative;
+  }
+
+  .tl-item::before {
+    content: '';
+    @apply absolute -left-[39px] top-1 h-3.5 w-3.5 rounded-full bg-brass;
+    box-shadow: 0 0 0 5px #f3eee3;
+  }
+
+  /* --- footer --- */
+  .foot-cta {
+    @apply font-serif text-[clamp(2rem,6vw,4.2rem)] font-medium leading-[1.03] -tracking-[0.01em] text-white;
   }
 }
