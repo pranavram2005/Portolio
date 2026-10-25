@@ -25,6 +25,7 @@ export const navLinks = [
   { id: 3, name: 'Projects', to: '/projects' },
   { id: 4, name: 'Vision', to: '/vision' },
   { id: 5, name: 'Snapshot', to: '/snapshot' },
+  { id: 6, name: 'Pro', to: '/pro' },
 ];
 
 export const hero = {

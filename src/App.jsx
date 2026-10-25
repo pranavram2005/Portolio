@@ -8,6 +8,7 @@ import LegacyApp from './legacy/LegacyApp.jsx';
 import AboutPage from './routes/AboutPage.jsx';
 import Home from './routes/Home.jsx';
 import ProjectsPage from './routes/ProjectsPage.jsx';
+import ProPage from './routes/ProPage.jsx';
 import VisionPage from './routes/VisionPage.jsx';
 
 /** A route change should land at the top of the new page, not mid-scroll. */
@@ -51,6 +52,9 @@ const App = () => (
           the site. It brings its own nav and footer, so it sits outside the
           shell. /part-two is the path it used to live at. */}
       <Route path="/snapshot" element={<LegacyApp />} />
+      {/* The professional single-page portfolio: its own sticky sidebar
+          and footer, so it also sits outside the shell. */}
+      <Route path="/pro" element={<ProPage />} />
       <Route path="/part-two" element={<Navigate to="/snapshot" replace />} />
       <Route path="*" element={<SiteShell />} />
     </Routes>
