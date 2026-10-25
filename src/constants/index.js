@@ -18,14 +18,14 @@ export const CONTACT = {
   instagram: 'https://www.instagram.com/pranavram2005',
 };
 
-// Top-level routes. Resume stays an outbound link rather than a route.
+// Pages of the browsable site, which lives behind the single-page portfolio
+// at '/'. The nav brand links back to that front door.
 export const navLinks = [
-  { id: 1, name: 'Home', to: '/' },
+  { id: 1, name: 'Explore', to: '/explore' },
   { id: 2, name: 'About', to: '/about' },
   { id: 3, name: 'Projects', to: '/projects' },
   { id: 4, name: 'Vision', to: '/vision' },
   { id: 5, name: 'Snapshot', to: '/snapshot' },
-  { id: 6, name: 'Pro', to: '/pro' },
 ];
 
 export const hero = {

@@ -22,7 +22,11 @@ const ScrollToTop = () => {
   return null;
 };
 
-/** The current site: shared nav, progress bar and footer around each page. */
+/**
+ * The browsable multi-page site: shared nav, progress bar and footer around
+ * each page. Its landing page lives at /explore now that the single-page
+ * portfolio is the front door.
+ */
 const SiteShell = () => (
   <>
     <ScrollProgress />
@@ -30,11 +34,11 @@ const SiteShell = () => (
 
     <main className="relative">
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/explore" element={<Home />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/projects" element={<ProjectsPage />} />
         <Route path="/vision" element={<VisionPage />} />
-        {/* Unknown paths fall back to the home page rather than a blank screen. */}
+        {/* Unknown paths land on the explore home rather than a blank screen. */}
         <Route path="*" element={<Home />} />
       </Routes>
     </main>
@@ -48,14 +52,16 @@ const App = () => (
     <ScrollToTop />
 
     <Routes>
-      {/* Snapshot is the single-page quick summary - the earliest version of
-          the site. It brings its own nav and footer, so it sits outside the
-          shell. /part-two is the path it used to live at. */}
+      {/* The single-page portfolio is the front door. It carries its own
+          sticky panel and footer, so it sits outside the shell.
+          /pro is the path it launched at. */}
+      <Route path="/" element={<ProPage />} />
+      <Route path="/pro" element={<Navigate to="/" replace />} />
+
+      {/* Snapshot - the earliest version, also standalone. */}
       <Route path="/snapshot" element={<LegacyApp />} />
-      {/* The professional single-page portfolio: its own sticky sidebar
-          and footer, so it also sits outside the shell. */}
-      <Route path="/pro" element={<ProPage />} />
       <Route path="/part-two" element={<Navigate to="/snapshot" replace />} />
+
       <Route path="*" element={<SiteShell />} />
     </Routes>
   </>

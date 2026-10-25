@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 import {
   about,
@@ -308,6 +309,24 @@ const ProPage = () => {
 
           {/* ----- footer ----- */}
           <footer className="pb-20 text-sm leading-relaxed text-tx-inkdim">
+            {/* This page is the front door; the other two versions of the site
+                are only reachable from here. */}
+            <p className="mb-6 border-t border-tx-ink/10 pt-6">
+              Rather browse?{' '}
+              <Link
+                to="/explore"
+                className="text-tx-ink underline decoration-brass underline-offset-4 transition-colors hover:text-brass">
+                Explore the full site
+              </Link>{' '}
+              — the same work across four pages, with the interactive hero. Or read the{' '}
+              <Link
+                to="/snapshot"
+                className="text-tx-ink underline decoration-brass underline-offset-4 transition-colors hover:text-brass">
+                one-page Snapshot
+              </Link>
+              .
+            </p>
+
             <p>
               Built in React and Tailwind CSS, typeset in Cormorant Garamond, Inter and JetBrains
               Mono. Deployed from a Vite build on GitHub Pages.
